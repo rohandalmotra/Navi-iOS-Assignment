@@ -24,47 +24,26 @@ class AppManager {
         }
         let session = URLSession.shared
         let task = session.dataTask(with: url) { data, response, error in
-                if error != nil {
-                    self.delegate?.didFailedWithError(error: error!)
-                    return
-                }
-                do {
-                    let decoder = JSONDecoder()
-                    self.listArray = try decoder.decode([DataModel].self, from: data!)
-                    
-
-                }
-                catch {
-                    print("at json \(error)")
-        //            delegate?.didFailedWithError(error: error)
-                    
-                }
-            completed()
-//                if let safeData = data{
-//                    if let details = self.parseJSON(safeData){
-//                        self.delegate?.didUpdateList(self, details: details)
-//                    }
-                   
-                }
-        task.resume()
+            if error != nil {
+                self.delegate?.didFailedWithError(error: error!)
+                return
             }
-            
-            
+            do {
+                let decoder = JSONDecoder()
+                self.listArray = try decoder.decode([DataModel].self, from: data!)
+                
+                
+            }
+            catch {
+             self.delegate?.didFailedWithError(error: error)
+                
+            }
+            completed()
         }
+        task.resume()
+    }
     
-//  func parseJSON(_ listData: Data) -> Details?{
-//        let decoder = JSONDecoder()
-//        do {
-//            let decodedData = try decoder.decode([DataModel].self, from: listData)
-//            print(decodedData)
-//
-//        }
-//        catch {
-//            print("at json \(error)")
-////            delegate?.didFailedWithError(error: error)
-//
-//        }
-//    }
-//
-//}
+    
+}
+
 

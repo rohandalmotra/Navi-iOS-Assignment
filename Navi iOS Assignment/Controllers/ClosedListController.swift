@@ -43,6 +43,42 @@ class ClosedListController: UITableViewController{
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToInfoScreen"{
+            let destinationVC = segue.destination as! InfoViewController
+            let selectedIndexPath = tableView.indexPathForSelectedRow!
+            let titleLabel = self.appManager.listArray[selectedIndexPath.row].title
+          let closedDateLabel = self.appManager.listArray[selectedIndexPath.row].closed_at
+            let createdDateLabel = self.appManager.listArray[selectedIndexPath.row].created_at
+            
+            
+            
+            DispatchQueue.main.async {
+                destinationVC.titleLabel.text = titleLabel
+                
+                destinationVC.closedDateLabel.text = closedDateLabel
+                destinationVC.createdDateLabel.text = createdDateLabel
+                performRequestForImage()
+
+            }
+            func performRequestForImage(){
+                let stringURL = appManager.listArray[selectedIndexPath.row].user.avatar_url
+                let url = URL(string: stringURL)
+                  if let data = try? Data(contentsOf: url!)
+                  {
+                      let image: UIImage = UIImage(data: data)!
+                      destinationVC.userImage.image = image
+                  }
+               
+            }
+            
+        }
+        
+      
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    
     
    
     
