@@ -6,40 +6,32 @@
 //
 
 import UIKit
-//protocol ManagerDelegate{
-//    func didUpdateList(detailedData: DetailedData)
-//    func didFailedWithError(error: Error)
-//}
+protocol ManagerDelegate{
+    func didUpdateList(list: DataModel)
+    func didFailedWithError(error: Error)
+}
 
 
 
 class Manager {
     var listArray: [DataModel] = []
     let urlAPI = "https://api.github.com/repos/lexrus/LTMorphingLabel/pulls?state=closed"
-//    var delegate: ManagerDelegate?
-    var numberOfRows = 0
-    var title = ""
-    var userName = ""
-    var userImage = ""
-    var createdDate = ""
-    var closedDate = ""
-    
-    
-    func performRequest(_ listNumber: Int){
+    var delegate: ManagerDelegate?
+    func performRequest(){
         if let url = URL(string: urlAPI){
             let session = URLSession(configuration: .default)
             
-            let task = session.dataTask(with: url) { [self] data, response, error in
-//                if error != nil {
-//                    self.delegate?.didFailedWithError(error: error!)
-//                    return
-//                }
+            let task = session.dataTask(with: url) { data, response, error in
+                if error != nil {
+                    self.delegate?.didFailedWithError(error: error!)
+                    return
+                }
                 if let safeData = data{
 //                    print(safeData)
-
-                    if let listData =  self.parseJSON(safeData, listNumber){
-//                        self.delegate?.didUpdateList(detailedData: listData)
-                    }
+                    self.parseJSON(safeData)
+//                    if let listData =  parseJSON(safeData){
+//                        delegate?.didUpdateList(list: listData)
+//                    }
                     
                 }
             }
@@ -48,32 +40,19 @@ class Manager {
         }
     }
     
-    func parseJSON(_ listData: Data, _ listNumber: Int){
+    func parseJSON(_ listData: Data){
         let decoder = JSONDecoder()
         do {
             self.listArray = try decoder.decode([DataModel].self, from: listData)
-           numberOfRows = listArray.count
-            title = listArray[listNumber].title
-            userName = listArray[listNumber].user.login
-            userImage = listArray[listNumber].user.avatar_url
-            createdDate = listArray[listNumber].created_at
-            closedDate = listArray[listNumber].closed_at
-//            let allData = DetailedData(title: title, userName: userName, userImage: userImage, closedDate: closedDate, createdDate: createdDate, numberOfRows: numberOfRows)
-//            return allData
+            
+            print(listArray[0].title)
+            
         }
         catch {
             print("at json \(error)")
 //            delegate?.didFailedWithError(error: error)
-//            return nil
+            
         }
-        
     }
-    
-    func getNumberOfRows() -> Int{
-        return listArray.count
-    }
-    
-    
-    
 }
 
