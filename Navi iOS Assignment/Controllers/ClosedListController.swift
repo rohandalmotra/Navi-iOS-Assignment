@@ -8,8 +8,7 @@
 import UIKit
 
 class ClosedListController: UITableViewController{
-    
-    var number = 0
+
     let appManager = AppManager()
 
     override func viewDidLoad() {
@@ -35,6 +34,7 @@ class ClosedListController: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "closedRequestItemCell", for: indexPath)
         cell.textLabel?.text = appManager.listArray[indexPath.row].title
+        cell.detailTextLabel?.text = "From \(appManager.listArray[indexPath.row].user.login)"
         return cell
 }
     
