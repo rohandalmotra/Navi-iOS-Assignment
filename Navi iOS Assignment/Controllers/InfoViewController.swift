@@ -9,6 +9,7 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var createdDateLabel: UILabel!
