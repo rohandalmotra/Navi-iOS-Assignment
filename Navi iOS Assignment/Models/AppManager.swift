@@ -6,15 +6,12 @@
 //
 
 import UIKit
-protocol ManagerDelegate{
-    func didUpdateList(_ manager: AppManager, details: Details)
-    func didFailedWithError(error: Error)
-}
-
 class AppManager {
     
     var listArray: [DataModel] = []
-    var delegate: ManagerDelegate?
+    
+//     api syntax = "https://api.github.com/repos/{owner}/{repo}/pulls"
+    
     let urlString = "https://api.github.com/repos/lexrus/LTMorphingLabel/pulls?state=closed"
     
     func performRequest(completed: @escaping ()->()){
@@ -25,17 +22,16 @@ class AppManager {
         let session = URLSession.shared
         let task = session.dataTask(with: url) { data, response, error in
             if error != nil {
-                self.delegate?.didFailedWithError(error: error!)
+                print("Error caught at url session\(error!)")
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 self.listArray = try decoder.decode([DataModel].self, from: data!)
                 
-                
-            }
+                }
             catch {
-             self.delegate?.didFailedWithError(error: error)
+            print("Error caught at parsingJSON\(error)")
                 
             }
             completed()

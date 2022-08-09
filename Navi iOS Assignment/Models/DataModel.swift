@@ -14,6 +14,7 @@ struct DataModel: Codable{
     let closed_at: String
     let user: User
 }
+//use coding key
 struct User: Codable{
     let login: String
     let avatar_url: String
