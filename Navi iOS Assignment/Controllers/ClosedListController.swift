@@ -3,7 +3,7 @@
 //  Navi iOS Assignment
 //
 //  Created by Rohan Dalmotra on 08/08/22.
-//pagination
+
 
 import UIKit
 
@@ -68,13 +68,7 @@ class ClosedListController: UITableViewController{
                     let image: UIImage = UIImage(data: data)!
                     destinationVC.userImage.image = image
                 }
-                
             }
-            
         }
-        
-        
-        
     }
-    
 }

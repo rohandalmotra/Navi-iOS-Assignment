@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 class AppManager {
     
     var listArray: [DataModel] = []
@@ -41,5 +42,6 @@ class AppManager {
     
     
 }
+
 
 
